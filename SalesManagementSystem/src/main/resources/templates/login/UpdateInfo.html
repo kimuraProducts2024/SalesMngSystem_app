@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>パスワード変更画面</title>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/login/UpdateInfo.css}"/>
+</head>
+<body>
+	<header>
+		<div class="headerDiv">
+			<div class="systemNameDiv">
+				<div class="systemName">プログレス販売管理システム</div>
+			</div>
+		</div>
+	</header>
+	<br>
+	<div class="container">
+		<div class="card card-container">
+			<form th:action="@{/login/UpdateInfo}" th:object="${loginForm}" class="form-signup" method="post">
+				<br>
+				<div class="card-title">
+					<label for="titleLabel" class="form-label">パスワード変更</label>
+				</div><br>
+				<label for="userIdLabel" class="form-label">ユーザID</label>
+				<input type="text" th:field="*{lFormUserid}" id="signupUserId" class="form-control" name="userid" placeholder="ユーザID"
+					required autofocus>
+				<label for="loginPassword" class="form-label">新しいパスワード</label>
+				<input type="password" th:field="*{lFormPassword}" id="signupPassword" class="form-control" name="password"
+					placeholder="パスワード" required>
+				<label for="reloginPassword" class="form-label">新しいパスワード（確認用）</label>
+				<input type="password" th:field="*{lFormConfpassword}" id="signupConfPassword" class="form-control" name="confpassword"
+					placeholder="パスワード（確認用）" required>
+				<label class="form-label labelErrMsg" th:text="*{lFormErrMsg}"></label>
+				<labal class="form-label labelMessage" th:text="*{lFormMessage}"></labal> 
+				<button class="btn btn-lg btn-primary w-100 btn-signup" type="submit" name="complete">パスワード変更</button>
+			</form>
+			<form th:action="@{/login/return}" method="post">
+				<button class="btn btn-lg btn-primary w-100 btn-return" type="submit">ログイン画面に戻る</button>
+			</form> 
+		</div>
+	</div>
+</body>
+</html>

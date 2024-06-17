@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング  -->
+<mapper namespace="com.salesmanagement.demo.mapper.MerchanSuppMapper">
+
+<!-- マッピング定義（Merchandise）  -->
+<resultMap type="com.salesmanagement.demo.entity.Merchandise" id="mid">
+	<id column="MID" property="mid"/>
+	<result column="MNAME" property="mname"/>
+	<result column="PRICE" property="price"/>
+	<result column="SUPID" property="supid"/>
+	<result column="SUPUNIT" property="supunit"/>
+	<result column="PUCKINGNUM" property="puckingnum"/>
+	<result column="CREATEDATE" property="createdate"/>
+	<result column="UPDATEDATE" property="updatedate"/>
+	<result column="DELFLG" property="delflg"/>
+	<result column="SUPNAME" property="supname"/>
+</resultMap>
+
+<!-- マッピング定義（Supplier） -->
+<resultMap type="com.salesmanagement.demo.entity.Supplier" id="supid">
+	<id column="SUPID" property="supid"/>
+	<result column="SUPNAME" property="supname"/>
+	<result column="CREATEDATE" property="createdate"/>
+	<result column="UPDATEDATE" property="updatedate"/>
+	<result column="DELFLG" property="delflg"/>
+</resultMap>
+
+	<!-- 商品をIDから検索  -->
+	<select id="findById" resultType="com.salesmanagement.demo.entity.Merchandise">
+		SELECT 
+			* 
+		FROM 
+			MERCHANDISE 
+		WHERE 
+			ID = #{id} 
+		AND 
+			DELFLG = 0
+	</select>
+
+	<!-- 商品全データを検索 -->
+	<select id="findAllMerchandise" resultType="com.salesmanagement.demo.entity.Merchandise">
+		SELECT 
+			* 
+		FROM 
+			MERCHANDISE 
+		WHERE 
+			DELFLG = 0
+	</select>
+	
+	<!-- 商品テーブル、発注先テーブルからデータ取得 -->
+	<select id="findAllMerchanSupp" resultType="com.salesmanagement.demo.entity.Merchandise">
+		SELECT 
+			MER.MID MID, 
+			MER.MNAME MNAME, 
+			MER.PRICE PRICE, 
+			MER.SUPID SUPID, 
+			SUP.SUPNAME SUPNAME, 
+			MER.SUPUNIT SUPUNIT, 
+			MER.PUCKINGNUM PUCKINGNUM, 
+			MER.CREATEDATE CREATEDATE, 
+			MER.UPDATEDATE UPDATEDATE, 
+			MER.DELFLG DELFLG 
+		FROM 
+			MERCHANDISE MER 
+		INNER JOIN 
+			SUPPLIER SUP 
+		ON 
+			MER.SUPID = SUP.SUPID 
+		WHERE 
+			MER.DELFLG = 0 
+		ORDER BY 
+			MER.MID 
+	</select>
+	
+	<!-- 検索画面の入力値を条件に、テーブルを検索 -->
+	<select id="searchAllMerchanSupp" resultType="com.salesmanagement.demo.entity.Merchandise">
+		SELECT 
+			MER.MID MID, 
+			MER.MNAME MNAME, 
+			MER.PRICE PRICE, 
+			MER.SUPID SUPID, 
+			SUP.SUPNAME SUPNAME, 
+			MER.SUPUNIT SUPUNIT, 
+			MER.PUCKINGNUM PUCKINGNUM, 
+			MER.CREATEDATE CREATEDATE, 
+			MER.UPDATEDATE UPDATEDATE, 
+			MER.DELFLG DELFLG 
+		FROM 
+			MERCHANDISE MER 
+		INNER JOIN 
+			SUPPLIER SUP 
+		ON 
+			MER.SUPID = SUP.SUPID 
+		WHERE
+			MER.DELFLG = 0
+		<if test="mFormid != 0">
+		AND
+				MER.MID = #{mFormid}
+		</if>
+		<if test="mFormname != ''">
+		AND
+			 MER.MNAME LIKE '%' || #{mFormname} || '%' 
+		</if>
+		<if test="mFormcreatedatefrom != null">
+		AND
+			MER.CREATEDATE <![CDATA[ > ]]>= #{mFormcreatedatefrom}
+		</if>
+		<if test="mFormcreatedateto != null">
+		AND
+			MER.CREATEDATE <![CDATA[ < ]]>= #{mFormcreatedateto}
+		</if>
+		<if test="mFormupdatedatefrom != null">
+		AND
+			MER.UPDATEDATE <![CDATA[ > ]]>= #{mFormupdatedatefrom}
+		</if>
+		<if test="mFormupdatedateto != null">
+		AND
+			MER.UPDATEDATE <![CDATA[ < ]]>= #{mFormupdatedateto}
+		</if>
+		ORDER BY 
+			MER.MID
+	</select>
+	
+	<!-- 商品を新規登録 -->
+	<insert id="insertMerchandise" >
+		INSERT INTO 
+			MERCHANDISE
+		VALUES (
+			#{mFormId},
+			#{mFormName},
+			#{mFormPrice},
+			#{mFormSupId},
+			#{mFormSupUnit},
+			#{mFormPuckingNum},
+			SYSTIMESTAMP,
+			NULL,
+			0
+		)
+	</insert>
+
+	<!-- 商品情報更新 -->
+	<update id="editMerchandise">
+		UPDATE 
+		    MERCHANDISE 
+		SET 
+		    MID = #{mFormId}, 
+		    MNAME = #{mFormName}, 
+		    PRICE = #{mFormPrice}, 
+		    SUPID = #{mFormSupId}, 
+		    SUPUNIT = #{mFormSupUnit}, 
+		    PUCKINGNUM = #{mFormPuckingNum}, 
+		    UPDATEDATE = SYSTIMESTAMP 
+		WHERE 
+		    MID = #{mFormId} 
+	</update>
+	
+	<!-- 商品削除 -->
+	<update id="deleteMerchandise">
+		UPDATE 
+			MERCHANDISE 
+		SET
+			DELFLG = 1, 
+			UPDATEDATE = SYSTIMESTAMP 
+		WHERE
+			MID = #{mFormmId}
+	</update>
+	
+	<!-- 発注先全データを検索 -->
+	<select id="findAllSupplier" resultType="com.salesmanagement.demo.entity.Supplier">
+		SELECT
+			*
+		FROM
+			SUPPLIER
+		WHERE
+			DELFLG = 0
+		ORDER BY 
+			SUPID
+	</select>
+	
+	<!-- 検索画面の入力値を条件に、発注先テーブルを検索 -->
+	<select id="searchSupplier" resultType="com.salesmanagement.demo.entity.Supplier">
+		SELECT 
+			*
+		FROM 
+			SUPPLIER
+		WHERE
+			DELFLG = 0
+		<if test="sFormSupId != 0">
+		AND
+				SUPID = #{sFormSupId}
+		</if>
+		<if test="sFormSupName != ''">
+		AND
+			 SUPNAME LIKE '%' || #{sFormSupName} || '%' 
+		</if>
+		<if test="sFormCreateDateFrom != null">
+		AND
+			CREATEDATE <![CDATA[ > ]]>= #{sFormCreateDateFrom}
+		</if>
+		<if test="sFormCreateDateTo != null">
+		AND
+			CREATEDATE <![CDATA[ < ]]>= #{sFormCreateDateTo}
+		</if>
+		<if test="sFormUpdateDateFrom != null">
+		AND
+			UPDATEDATE <![CDATA[ > ]]>= #{sFormUpdateDateFrom}
+		</if>
+		<if test="sFormUpdateDateTo != null">
+		AND
+			UPDATEDATE <![CDATA[ < ]]>= #{sFormUpdateDateTo}
+		</if>
+		ORDER BY 
+			SUPID
+	</select>
+	
+	<!-- 発注先を新規登録 -->
+	<insert id="insertSupplier" >
+		INSERT INTO 
+			SUPPLIER
+		VALUES (
+			#{sFormSupId},
+			#{sFormSupName},
+			SYSTIMESTAMP,
+			NULL,
+			0
+		)
+	</insert>
+	
+	<!-- 発注先情報更新 -->
+	<update id="editSupplier">
+		UPDATE 
+		    SUPPLIER 
+		SET 
+		    SUPID = #{sFormSupId}, 
+		    SUPNAME = #{sFormSupName}, 
+		    UPDATEDATE = SYSTIMESTAMP 
+		WHERE 
+		    SUPID = #{sFormSupId} 
+	</update>
+	
+	<!-- 発注先情報削除 -->
+	<update id="deleteSupplier">
+		UPDATE 
+			SUPPLIER 
+		SET
+			DELFLG = 1, 
+			UPDATEDATE = SYSTIMESTAMP 
+		WHERE
+			SUPID = #{sFormSupId}
+	</update>
+</mapper>

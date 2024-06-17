@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='発注先情報更新', scripts = ~{}, links = ~{::link})}">
+	<link rel="stylesheet" th:href="@{/css/supplier/SupplierCommon.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/supplier/edit/send}" th:object="${supListForm}" th:method="post">
+			<hr>
+			<div class="headText">発注先情報更新</div>
+			<table>
+				<tr>
+					<th>発注先ID</th>
+					<td><input type="text" class="idText" th:field="*{sFormSupId}"></td>
+				</tr>
+				<tr>
+					<th>発注先名</th>
+					<td><input type="text" class="nameText" th:field="*{sFormSupName}"></td>
+				</tr>
+			</table>
+			<div class="buttonArea">
+				<input type="submit" name="returnEdit" class="button" value="一覧へ戻る" />
+				<input type="submit" name="edit" class="button" value="更新" />
+			</div>
+			<div class="messageDiv" th:text="${message}"></div>
+		</form>
+	</main>
+</body>
+</html>

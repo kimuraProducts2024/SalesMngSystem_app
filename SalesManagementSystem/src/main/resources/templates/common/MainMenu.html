@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='メインメニュー', scripts = ~{}, links = ~{::link})}">
+	<link rel="stylesheet" th:href="@{/css/mainmenu/MainMenu.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/main/send}" method="post">
+			<hr>
+			<div class="titleText">
+				メインメニュー
+			</div>
+			<hr>
+			<div class="headText">
+				発注先管理
+				<div class="buttonArea">
+					<input type="submit" name="gotoSupList" class="button" value="発注先管理" />
+					<input type="submit" name="gotoSupRegi" class="button" value="発注先登録" />
+				</div>
+			</div>
+			<hr>
+			<div class="headText">
+				商品管理
+				<div class="buttonArea">
+					<input type="submit" name="gotoMerList" class="button" value="商品管理" />
+					<input type="submit" name="gotoMerRegi" class="button" value="商品登録" />
+				</div>
+			</div>
+			<hr>
+			<div class="headText">
+				商品在庫管理
+				<div class="buttonArea">
+					<input type="submit" name="gotoStockList" class="button" value="商品在庫管理" />
+					<input type="submit" name="gotoStockRegi" class="button" value="商品在庫登録" />
+				</div>
+			</div>
+			<hr>
+			<div class="headText">
+				ログアウト
+				<div class="buttonArea">
+					<input type="submit" name="logOut" class="button" value="ログアウト" />
+				</div>
+			</div>
+		</form>
+	</main>
+</body>
+</html>

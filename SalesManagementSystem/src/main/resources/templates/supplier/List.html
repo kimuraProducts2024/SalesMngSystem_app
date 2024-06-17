@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='発注先一覧', scripts = ~{}, links = ~{::link})}">
+	<link rel="stylesheet" th:href="@{/css/supplier/SupplierList.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/supplier/send}" th:object="${supListForm}" th:method="post">
+			<div class="messageDiv" th:text="${message}"></div>
+			<hr>
+			<div class="headText">発注先登録</div>
+			<div class="registbtn">
+				<input type="submit" name="regist" class="button" value="発注先登録へ" />
+			</div>
+			<hr>
+			<table>
+				<tr>
+					<div class="headText">発注先検索</div>
+				</tr>
+				<tr>
+					<th>発注先ID</th>
+					<td><input type="text" class="idText" th:field="*{sFormSupId}"></td>
+					<th>発注先名</th>
+					<td><input type="text" class="nameText" th:field="*{sFormSupName}"></td>
+				</tr>
+				<tr>
+					<th>登録日</th>
+					<td>
+						<input type="date" class="dateText" th:field="*{sFormCreateDateFrom}">
+						～
+						<input type="date" class="dateText" th:field="*{sFormCreateDateTo}">
+					</td>
+					<th>更新日</th>
+					<td>
+						<input type="date" class="dateText" th:field="*{sFormUpdateDateFrom}">
+						～
+						<input type="date" class="dateText" th:field="*{sFormUpdateDateTo}">
+					</td>
+				</tr>
+			</table>
+			<div class="searchbtn">
+				<input type="submit" name="search" class="button" value="検索" />
+			</div>
+			<hr>
+			<div th:if="*{sList}">
+				<table>
+					<tr>
+						<div class="headText">発注先一覧</div>
+					</tr>
+					<thead>
+						<tr>
+							<th>発注先ID</th>
+							<th class="mnamecol">発注先名</th>
+							<th>登録日</th>
+							<th>更新日</th>
+							<th>更新ボタン</th>
+							<th>削除ボタン</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="supItem : *{sList}" th:object="${supItem}">
+							<td th:text="*{supid}"></td>
+							<td class="suppNameText" th:text="*{supname}"></td>
+							<td th:text="*{#dates.format(createdate, 'yyyy/MM/dd')}"></td>
+							<td th:text="*{#dates.format(updatedate, 'yyyy/MM/dd')}"></td>
+							<td>
+								<form method="get" th:action="@{/supplier/edit/{id}(id=*{supid})}">
+									<input type="submit" name="edit" class="button" value="更新" />
+								</form>
+							</td>
+							<td>
+								<form method="get" th:action="@{/supplier/delete/{id}(id=*{supid})}">
+									<input type="submit" name="delete" class="button" value="削除" />
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</main>
+</body>
+</html>

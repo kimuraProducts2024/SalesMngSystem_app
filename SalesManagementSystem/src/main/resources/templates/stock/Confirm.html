@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='処理確認', scripts = ~{}, links = ~{::link})}">
+		<link rel="stylesheet" th:href="@{/css/stock/StockCommon.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/stock/confirm}" th:object="${stockRegiForm}" th:method="post">
+			<hr>
+			<th:block th:switch="*{stFormStatus}">
+				<div th:case="1" th:text="商品在庫登録" class="headText"></div>
+				<div th:case="2" th:text="商品在庫情報更新" class="headText"></div>
+				<div th:case="3" th:text="商品在庫削除" class="headText"></div>
+			</th:block>
+			<table>
+				<tr>
+					<th>商品在庫ID</th>
+					<td th:text="*{stFormStId}"></td>
+					<input type="text" class="idText" th:field="*{stFormStId}" hidden>
+				</tr>
+				<tr>
+					<th>商品ID</th>
+					<td th:text="*{stFormMid}"></td>
+					<input type="text" class="idText" th:field="*{stFormMid}" hidden>
+				</tr>
+				<tr>
+					<th>棚卸日</th>
+					<td th:text="*{stFormInventoryDate}"></td>
+					<input type="date" class="dateText" th:field="*{stFormInventoryDate}" hidden>
+				</tr>
+				<tr>
+					<th>棚卸数（個）</th>
+					<td th:text="*{stFormInventoryNum}"></td>
+					<input type="number" class="supUnitText" th:field="*{stFormInventoryNum}" hidden>
+				</tr>
+				<tr>
+					<th>最大在庫（個）</th>
+					<td th:text="*{stFormMaxStockNum}"></td>
+					<input type="number" class="supUnitText" th:field="*{stFormMaxStockNum}" hidden>
+				</tr>
+				<tr>
+					<th>発注点（個）</th>
+					<td th:text="*{stFormOrderPoint}"></td>
+					<input type="number" class="puckingNumText" th:field="*{stFormOrderPoint}" hidden>
+				</tr>
+				<tr>
+					<th>棚卸位置</th>
+					<td th:text="*{stFormInventoryPoint}"></td>
+					<input type="text" class="inventoryPointText" th:field="*{stFormInventoryPoint}" hidden>
+				</tr>
+			</table>
+			<th:block th:switch="*{stFormStatus}">
+				<div th:case="1" class="buttonArea">
+					<input type="submit" name="returnRegi" class="button" value="登録画面へ戻る" />
+					<input type="submit" name="complete" class="button" value="登録完了" />
+				</div>
+				<div th:case="2" class="buttonArea">
+					<input type="submit" name="returnEdit" class="button" value="更新画面へ戻る" />
+					<input type="submit" name="completeEdit" class="button" value="更新完了" />
+				</div>
+				<div th:case="3" class="buttonArea">
+					<input type="submit" name="returnDel" class="button" value="商品一覧へ戻る" />
+					<input type="submit" name="completeDel" class="button" value="削除完了" />
+				</div>
+			</th:block>
+			<div class="messageDiv" th:text="${confirmMsg}"></div>
+		</form>
+	</main>
+</body>
+</html>

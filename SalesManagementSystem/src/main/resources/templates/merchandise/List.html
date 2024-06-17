@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='商品一覧', scripts = ~{}, links = ~{::link})}">
+	<link rel="stylesheet" th:href="@{/css/Merchandise.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/merchandise/send}" th:object="${merListForm}" th:method="post">
+			<div  class="messageDiv" th:text="${message}"></div>
+			<hr>
+			<div class="headText">商品登録</div>
+			<div class="registbtn">
+				<input type="submit" name="regist" class="button" value="商品登録へ" />
+			</div>
+			<hr>
+			<table>
+				<tr>
+					<div class="headText">商品検索</div>
+				</tr>
+				<tr>
+					<th>商品ID</th>
+					<td><input type="text" class="idText" th:field="*{mFormid}"></td>
+					<th>商品名</th>
+					<td><input type="text" class="nameText" th:field="*{mFormname}"></td>
+				</tr>
+				<tr>
+					<th>登録日</th>
+					<td>
+						<input type="date" class="dateText" th:field="*{mFormcreatedatefrom}">
+						～
+						<input type="date" class="dateText" th:field="*{mFormcreatedateto}">
+					</td>
+					<th>更新日</th>
+					<td>
+						<input type="date" class="dateText" th:field="*{mFormupdatedatefrom}">
+						～
+						<input type="date" class="dateText" th:field="*{mFormupdatedateto}">
+					</td>
+				</tr>
+			</table>
+			<div class="searchbtn">
+				<input type="submit" name="search" class="button" value="検索" />
+			</div>
+			<hr>
+			<div th:if="*{mList}">
+				<table>
+					<tr>
+						<div class="headText">商品一覧</div>
+					</tr>
+					<thead>
+						<tr>
+							<th>商品ID</th>
+							<th class="mnamecol">商品名</th>
+							<th>価格（円）</th>
+							<th>発注先名</th>
+							<th>発注単位（個）</th>
+							<th>梱包数（個）</th>
+							<th>登録日</th>
+							<th>更新日</th>
+							<th>更新ボタン</th>
+							<th>削除ボタン</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="merItem : *{mList}" th:object="${merItem}">
+							<td th:text="*{mid}"></td>
+							<td th:text="*{mname}"></td>
+							<td th:text="*{#numbers.formatInteger(price, 3, 'COMMA')}"></td>
+							<td hidden th:text="*{supid}"></td>
+							<td class="supName" th:text="*{supname}"></td>
+							<td th:text="*{supunit}"></td>
+							<td th:text="*{puckingnum}"></td>
+							<td th:text="*{#dates.format(createdate, 'yyyy/MM/dd')}"></td>
+							<td th:text="*{#dates.format(updatedate, 'yyyy/MM/dd')}"></td>
+							<td>
+								<form method="get" th:action="@{/merchandise/edit/{id}(id=*{mid})}">
+									<input type="submit" name="edit" class="button" value="更新" />
+								</form>
+							</td>
+							<td>
+								<form method="get" th:action="@{/merchandise/delete/{id}(id=*{mid})}">
+									<input type="submit" name="delete" class="button" value="削除" />
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</main>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='商品在庫登録', scripts = ~{}, links = ~{::link})}">
+		<link rel="stylesheet" th:href="@{/css/stock/StockRegi.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/stock/regist}" th:object="${stockRegiForm}" th:method="post">
+			<hr>
+			<div class="headText">商品在庫登録</div>
+			<table>
+				<tr>
+					<th>商品在庫ID</th>
+					<td><input type="text" class="idText" th:field="*{stFormStId}"></td>
+				</tr>
+				<tr>
+					<th>商品ID</th>
+					<td><input type="text" class="idText" th:field="*{stFormMid}"></td>
+				</tr>
+				<tr>
+					<th>棚卸日</th>
+					<td><input type="date" class="dateText" th:field="*{stFormInventoryDate}"></td>
+				</tr>
+				<tr>
+					<th>棚卸数（個）</th>
+					<td><input type="number" class="supUnitText" th:field="*{stFormInventoryNum}"></td>
+				</tr>
+				<tr>
+					<th>最大在庫（個）</th>
+					<td><input type="number" class="supUnitText" th:field="*{stFormMaxStockNum}"></td>
+				</tr>
+				<tr>
+					<th>発注点（個）</th>
+					<td><input type="number" class="puckingNumText" th:field="*{stFormOrderPoint}"></td>
+				</tr>
+				<tr>
+					<th>棚卸位置</th>
+					<td><input type="text" class="inventoryPointText" th:field="*{stFormInventoryPoint}"></td>
+				</tr>
+			</table>
+			<div class="buttonArea">
+				<input type="submit" name="return" class="button" value="一覧へ戻る"/>
+				<input type="submit" name="regist" class="button" value="新規登録"/>
+			</div>
+			<div class="messageDiv" th:text="${message}"></div>
+		</form>
+	</main>
+</body>
+</html>

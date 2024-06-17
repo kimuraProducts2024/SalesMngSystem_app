@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ログイン画面</title>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/login/login.css}"/>
+</head>
+<body>
+	<header>
+		<div class="headerDiv">
+			<div class="systemNameDiv">
+				<div class="systemName">プログレス販売管理システム</div>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="card card-container">
+			<img id="profile-img" class="profile-img-card" th:src="@{/image/loginUser.png}">
+			<p id="profile-name" class="profile-name-card"></p>
+			<form th:action="@{/login}" th:object="${loginForm}" class="form-signin" method="post">
+				<div class="card-title">
+					<label for="titleLabel" class="form-label">プログレス販売管理システム</label>
+				</div>
+				<span id="reauth-userid" class="reauth-userid"></span>
+				<label for="loginLabel" class="form-label">ユーザID</label>
+				<input type="text" th:field="*{lFormUserid}" id="inputUserId" class="form-control" name="userid"
+					placeholder="ユーザID" required autofocus>
+				<label for="loginPassword" class="form-label">パスワード</label>
+				<input type="password" th:field="*{lFormPassword}" id="inputPassword" class="form-control" name="password"
+					placeholder="パスワード" required>
+				<input type="hidden" for="errcount" name="errcount" th:field="*{lFormErrcount}"></input>
+				<button class="btn btn-lg btn-primary w-100 btn-signin" type="submit">ログイン</button>
+				<a href="#" th:href="@{/login/UpdateInfo}" class="forgot-password">
+					パスワードをお忘れですか?
+				</a><br>
+				<a href="#" th:href="@{/login/RegistUser}" class="forgot-password">
+					ユーザ新規登録
+				</a>
+				<label class="form-label labelErrMsg" th:text="*{lFormErrMsg}"></label>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

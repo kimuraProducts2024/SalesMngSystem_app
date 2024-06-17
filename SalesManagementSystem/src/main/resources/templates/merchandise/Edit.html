@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='商品情報更新', scripts = ~{}, links = ~{::link})}">
+		<link rel="stylesheet" th:href="@{/css/MerchandiseRegi.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/merchandise/edit/send}" th:object="${merRegiForm}" th:method="post">
+			<hr>
+			<div class="headText">商品情報更新</div>
+			<table>
+				<tr>
+					<th>商品ID</th>
+					<td><input type="text" class="idText" th:field="*{mFormId}"></td>
+				</tr>
+				<tr>
+					<th>商品名</th>
+					<td><input type="text" class="nameText" th:field="*{mFormName}"></td>
+				</tr>
+				<tr>
+					<th>価格（円）</th>
+					<td><input type="number" class="priceText" th:field="*{mFormPrice}"></td>
+				</tr>
+				<tr>
+					<th>発注先名</th>
+					<td>
+						<select th:field="*{mFormSupId}">
+							<option value="00"></option>
+							<option th:each="supItem : ${supList}" th:value="${supItem.supid}" 
+								th:text="${supItem.supname}" th:selected="${supItem.supid == selectedValue}">
+							</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>発注単位（個）</th>
+					<td><input type="number" class="supUnitText" th:field="*{mFormSupUnit}"></td>
+					
+				</tr>
+				<tr>
+					<th>梱包数（個）</th>
+					<td><input type="number" class="puckingNumText" th:field="*{mFormPuckingNum}"></td>
+				</tr>
+			</table>
+			<div class="buttonArea">
+				<input type="submit" name="returnEdit" class="button" value="一覧へ戻る"/>
+				<input type="submit" name="regist" class="button" value="更新"/>
+			</div>
+			<div class="messageDiv" th:text="${message}"></div>
+		</form>
+	</main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='商品登録', scripts = ~{}, links = ~{::link})}">
+		<link rel="stylesheet" th:href="@{/css/MerchandiseCommon.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/merchandise/confirm}" th:object="${merRegiForm}" th:method="post">
+			<hr>
+			<th:block th:switch="*{mFormStatus}">
+				<div th:case="1" th:text="商品登録" class="headText"></div>
+				<div th:case="2" th:text="商品情報更新" class="headText"></div>
+				<div th:case="3" th:text="商品削除" class="headText"></div>
+			</th:block>
+			<table>
+				<tr>
+					<th>商品ID</th>
+					<td th:text="*{mFormId}"></td>
+					<input type="text" th:field="*{mFormId}" hidden>
+				</tr>
+				<tr>
+					<th>商品名</th>
+					<td  class="nameText" th:text="*{mFormName}"></td>
+					<input type="text" th:field="*{mFormName}" hidden>
+				</tr>
+				<tr>
+					<th>価格（円）</th>
+					<td th:text="*{mFormPrice}"></td>
+					<input type="text" th:field="*{mFormPrice}" hidden>
+				</tr>
+				<tr>
+					<th>発注先名</th>
+					<td th:text="*{mFormSupId}" hidden></td>
+					<input type="text" th:field="*{mFormSupId}" hidden>
+					<td th:text="*{mFormSupName}"></td>
+					<input type="text" th:field="*{mFormSupName}" hidden>
+				</tr>
+				<tr>
+					<th>発注単位（個）</th>
+					<td th:text="*{mFormSupUnit}"></td>
+					<input type="text" th:field="*{mFormSupUnit}" hidden>
+				</tr>
+				<tr>
+					<th>梱包数（個）</th>
+					<td th:text="*{mFormPuckingNum}"></td>
+					<input type="text" th:field="*{mFormPuckingNum}" hidden>
+				</tr>
+			</table>
+			<th:block th:switch="*{mFormStatus}">
+				<div th:case="1" class="buttonArea">
+					<input type="submit" name="returnRegi" class="button" value="登録画面へ戻る" />
+					<input type="submit" name="complete" class="button" value="登録完了" />
+				</div>
+				<div th:case="2" class="buttonArea">
+					<input type="submit" name="returnEdit" class="button" value="更新画面へ戻る" />
+					<input type="submit" name="completeEdit" class="button" value="更新完了" />
+				</div>
+				<div th:case="3" class="buttonArea">
+					<input type="submit" name="returnDel" class="button" value="商品一覧へ戻る" />
+					<input type="submit" name="completeDel" class="button" value="削除完了" />
+				</div>
+			</th:block>
+			<div class="messageDiv" th:text="${confirmMsg}"></div>
+		</form>
+	</main>
+</body>
+</html>

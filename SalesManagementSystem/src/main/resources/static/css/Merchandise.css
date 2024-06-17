@@ -1,0 +1,93 @@
+@charset "UTF-8";
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0 13px 0 13px;
+	padding: 0;
+}
+
+hr {
+	margin-top: 23px;
+}
+
+table {
+	width:90%;
+	border-collapse:collapse;
+	font-size: 10px;
+	text-align: center;
+}
+
+table th, table td {
+	border: 1px solid #ddd;
+	padding: 6px;
+}
+
+table th {
+	background-color: #C0C0C0;
+}
+
+.headText {
+	font-size: 18px;
+}
+
+.messageDiv{
+	color: blue;
+	font-family: serif;
+}
+
+.mnamecol {
+	width: 350px;
+}
+
+.button {
+	width: 120px;
+	height: 30px;
+	font-size: 12px;
+	font-family:sans-serif;
+	color:white;
+	background-color: #999999;
+}
+
+.button:hover {
+	background-color: #555555;
+}
+
+.searchbtn, .registbtn {
+	margin:10px 135px 0px 0px;
+	text-align: right;
+}
+
+.idText {
+	font-weight: lighter;
+}
+
+.idText:focus {
+	box-shadow: 0px 0px 10px 0px rgba(60, 179, 113, 1);
+}
+
+.nameText {
+	width: 350px;
+	font-weight: lighter;
+}
+
+.nameText:focus {
+	box-shadow: 0px 0px 10px 0px rgba(60, 179, 113, 1);
+}
+
+.dateText {
+	margin: 0px 10px;
+	width: 150px;
+	height: 20px;
+	font-size: 12px;
+	font-family: sans-serif;
+}
+
+.dateText:focus {
+	box-shadow: 0px 0px 10px 0px rgba(60, 179, 113, 1);
+}
+
+.supName {
+	width: 145px;
+}

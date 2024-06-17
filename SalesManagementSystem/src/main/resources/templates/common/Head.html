@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<head xmlns:th="http://www.thymeleaf.org" 
+			th:fragment="head_fragment(title, scripts, links)">
+<meta charset="UTF-8">
+<title th:text="${title}">タイトル</title>
+<link rel="stylesheet" th:href="@{/css/Header.css}">
+<!-- 各画面専用のscript、cssを定義 -->
+<th:block th:replace="${links}" />
+<th:block th:replace="${scripts}" />
+</head>

@@ -1,0 +1,44 @@
+@charset "UTF-8";
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0 13px 0 13px;
+	padding: 0;
+}
+
+hr {
+	margin-top: 23px;
+}
+
+.titleText {
+	font-size: 22px;
+	transform: skewX(-20deg);
+}
+
+.headText {
+	font-size: 18px;
+}
+
+.buttonArea {
+	margin: 15px 0px 0px 35px;
+}
+
+.button {
+	width: 120px;
+	height: 30px;
+	font-size: 12px;
+	font-family:sans-serif;
+	color:white;
+	background-color: #999999;
+}
+
+.button:hover {
+	background-color: #555555;
+}
+
+.searchbtn, .registbtn {
+	margin:10px 135px 0px 0px;
+	text-align: right;
+}

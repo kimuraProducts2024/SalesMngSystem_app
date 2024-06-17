@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング  -->
+<mapper namespace="com.salesmanagement.demo.mapper.StockMapper">
+
+<!-- マッピング定義(Stock) -->
+<resultMap type="com.salesmanagement.demo.entity.Stock" id="stId">
+	<id column="STID" property="stId"/>
+	<result column="MID" property="mId"/>
+	<result column="MNAME" property="mName"/>
+	<result column="INVENTORYDATE" property="inventoryDate"/>
+	<result column="INVENTORYNUM" property="inventoryNum"/>
+	<result column="MAXSTOCKNUM" property="maxStockNum"/>
+	<result column="ORDERPOINT" property="orderPoint"/>
+	<result column="INVENTORYPOINT" property="inventoryPoint"/>
+	<result column="CREATEDATE" property="createDate"/>
+	<result column="UPDATEDATE" property="updateDate"/>
+	<result column="DELFLG" property="delFlg"/>
+</resultMap>
+
+<!-- マッピング定義（Merchandise）  -->
+<resultMap type="com.salesmanagement.demo.entity.Merchandise" id="mid">
+	<id column="MID" property="mid"/>
+	<result column="MNAME" property="mname"/>
+	<result column="PRICE" property="price"/>
+	<result column="SUPID" property="supid"/>
+	<result column="SUPUNIT" property="supunit"/>
+	<result column="PUCKINGNUM" property="puckingnum"/>
+	<result column="CREATEDATE" property="createdate"/>
+	<result column="UPDATEDATE" property="updatedate"/>
+	<result column="DELFLG" property="delflg"/>
+	<result column="SUPNAME" property="supname"/>
+</resultMap>
+
+<!-- マッピング定義（Supplier） -->
+<resultMap type="com.salesmanagement.demo.entity.Supplier" id="supid">
+	<id column="SUPID" property="supid"/>
+	<result column="SUPNAME" property="supname"/>
+	<result column="CREATEDATE" property="createdate"/>
+	<result column="UPDATEDATE" property="updatedate"/>
+	<result column="DELFLG" property="delflg"/>
+</resultMap>
+	
+	<!-- 商品在庫をIDから検索 -->
+	<select id="findById" resultType="com.salesmanagement.demo.entity.Stock">
+		SELECT 
+			* 
+		FROM 
+			STOCK 
+		WHERE 
+			STID = #{id} 
+	</select>
+	
+	<!-- 商品在庫テーブル、商品テーブルからデータ取得 -->
+	<select id="findAllStockMerchan" resultType="com.salesmanagement.demo.entity.Stock">
+		SELECT 
+			ST.STID, 
+			ST.MID, 
+			MER.MNAME, 
+			ST.INVENTORYDATE, 
+			ST.INVENTORYNUM, 
+			ST.MAXSTOCKNUM, 
+			ST.ORDERPOINT, 
+			ST.INVENTORYPOINT, 
+			ST.CREATEDATE, 
+			ST.UPDATEDATE, 
+			ST.DELFLG 
+		FROM 
+			STOCK ST 
+		LEFT JOIN 
+			MERCHANDISE MER 
+		ON 
+			ST.MID = MER.MID 
+		LEFT JOIN 
+			SUPPLIER SUP 
+		ON 
+			SUP.SUPID = MER.SUPID 
+		WHERE 
+			ST.DELFLG = 0 
+		AND 
+			MER.DELFLG = 0 
+		AND 
+			SUP.DELFLG = 0 
+		ORDER BY 
+			ST.STID 
+	</select>
+	
+	<!-- 検索画面の入力値を条件に、テーブルを検索 -->
+	<select id="searchAllStockMerchan" resultType="com.salesmanagement.demo.entity.Stock">
+		SELECT 
+			ST.STID, 
+			ST.MID, 
+			MER.MNAME, 
+			ST.INVENTORYDATE, 
+			ST.INVENTORYNUM, 
+			ST.MAXSTOCKNUM, 
+			ST.ORDERPOINT, 
+			ST.INVENTORYPOINT, 
+			ST.CREATEDATE, 
+			ST.UPDATEDATE, 
+			ST.DELFLG 
+		FROM 
+			STOCK ST 
+		LEFT JOIN 
+			MERCHANDISE MER 
+		ON 
+			ST.MID = MER.MID 
+		LEFT JOIN 
+			SUPPLIER SUP 
+		ON 
+			SUP.SUPID = MER.SUPID 
+		WHERE 
+			ST.DELFLG = 0 
+		AND 
+			MER.DELFLG = 0 
+		AND 
+			SUP.DELFLG = 0 
+		<if test="stFormStId != 0">
+		AND
+				ST.STID = #{stFormStId}
+		</if>
+		<if test="stFormMid != 0">
+		AND
+				ST.MID = #{stFormMid}
+		</if>
+		<if test="stFormInventoryDateFrom != null">
+		AND
+			ST.INVENTORYDATE <![CDATA[ > ]]>= #{stFormInventoryDateFrom}
+		</if>
+		<if test="stFormInventoryDateTo != null">
+		AND
+			ST.INVENTORYDATE <![CDATA[ < ]]>= #{stFormInventoryDateTo}
+		</if>
+		<if test="stFormInventoryPoint != 0">
+		AND
+				ST.INVENTORYPOINT = #{stFormInventoryPoint}
+		</if>
+		<if test="stFormCreateDateFrom != null">
+		AND
+			ST.CREATEDATE <![CDATA[ > ]]>= #{stFormCreateDateFrom}
+		</if>
+		<if test="stFormCreateDateTo != null">
+		AND
+			ST.CREATEDATE <![CDATA[ < ]]>= #{stFormCreateDateTo}
+		</if>
+		<if test="stFormUpdateDateFrom != null">
+		AND
+			ST.UPDATEDATE <![CDATA[ > ]]>= #{stFormUpdateDateFrom}
+		</if>
+		<if test="stFormUpdateDatTo != null">
+		AND
+			ST.UPDATEDATE <![CDATA[ < ]]>= #{stFormUpdateDatTo}
+		</if>
+		ORDER BY 
+			ST.STID 
+	</select>
+	
+	<!-- 商品在庫を新規登録 -->
+	<insert id="insertStock" >
+		INSERT INTO 
+			STOCK 
+		VALUES ( 
+			#{stFormStId}, 
+			#{stFormMid}, 
+			#{stFormInventoryDate}, 
+			#{stFormInventoryNum}, 
+			#{stFormMaxStockNum}, 
+			#{stFormOrderPoint}, 
+			#{stFormInventoryPoint}, 
+			SYSTIMESTAMP, 
+			NULL, 
+			0 
+		)
+	</insert>
+
+	<!-- 商品在庫情報更新 -->
+	<update id="editStock">
+		UPDATE 
+		    STOCK 
+		SET 
+		    STID = #{stFormStId}, 
+		    MID = #{stFormMid}, 
+		    INVENTORYDATE = #{stFormInventoryDate}, 
+		    INVENTORYNUM = #{stFormInventoryNum}, 
+		    MAXSTOCKNUM = #{stFormMaxStockNum}, 
+		    ORDERPOINT = #{stFormOrderPoint}, 
+		    INVENTORYPOINT = #{stFormInventoryPoint}, 
+		    UPDATEDATE = SYSTIMESTAMP 
+		WHERE 
+		    STID = #{stFormStId} 
+	</update>
+	
+	<!-- 商品在庫削除 -->
+	<update id="deleteStock">
+		UPDATE 
+			STOCK 
+		SET
+			DELFLG = 1, 
+			UPDATEDATE = SYSTIMESTAMP 
+		WHERE 
+			STID = #{stFormStId} 
+	</update>
+</mapper>

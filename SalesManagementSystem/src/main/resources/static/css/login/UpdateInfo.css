@@ -1,0 +1,168 @@
+@charset "UTF-8";
+header {
+	position: sticky;
+	top:0;
+	width: 100%;
+	background-color:darkgray;
+	align-items: center;
+}
+body, html {
+	margin: 0 13px 0 13px;
+	padding: 0;
+    font-family:serif;
+}
+
+.systemNameDiv {
+	position: relative;
+	padding: 0;
+	margin:10px 0 10px 25px;
+	display: inline-block;
+	transition: .3s;
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 28px;
+	transform: skewX(-20deg);
+}
+
+.card-container .card {
+	max-width: 350px;
+	padding: 40px 40px;
+}
+.btn {
+	font-weight: 700;
+	height: 36px;
+	margin: 25px auto;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select:none;
+	cursor:default;
+}
+.card {
+	color: rgb(255, 255, 255);
+	background-color:rgb(200, 200, 200);
+	padding: 20px 25px 30px;
+	margin: 0 auto 25px;
+	margin-top: 50px;
+	width: 350px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.card-title {
+	text-align:center;
+	font-size: 17px;
+}
+.profile-name-card {
+	font-size: 16px;
+	font-weight: bold;
+	text-align:center;
+	margin: 10px 0 0;
+	min-height: 1em;
+}
+.form-signup #signupUserId
+.form-signup #signupPassword 
+.form-signup #signupConfPassword{
+	direction: ltr;
+	height: 40px;
+	font-size: 16px;
+}
+
+
+.form-signup input[type=text],
+.form-signup input[type=password] {
+	width: 100%;
+	display:block;
+	margin-bottom: 10px;
+	border-radius:0.4rem;
+	z-index: 1;
+	position:relative;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.form-signup button {
+	width: 100%;
+	display:block;
+	padding-bottom:0px;
+	margin-bottom: 0px;
+	z-index: 1;
+	position:relative;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.form-signup .form-control:focus {
+	border-color: rgb(104, 145, 162);
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),0 0 8px rgb(104, 145, 162);
+	box-shadow: inset 0 1px rgba(0, 0, 0, .075), 0 0 8px rgb(104, 145, 162);
+}
+.btn.btn-signup,
+.btn.btn-return {
+	background-color: rgb(104, 145, 162);
+	padding: 0px;
+	font-weight: 700;
+	font-size: 14px;
+	height: 36px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: none;
+	border-bottom:0px;
+	margin-bottom:3px;
+	-moz-transition: all 0.218s;
+	-webkit-transition: all 0.218s;
+	-o-transition: all 0.218s;
+	transition: all 0.218s;
+}
+
+.btn.btn-return {
+	background-color: rgb(104, 145, 162);
+	padding: 0px;
+	font-weight: 700;
+	font-size: 14px;
+	height: 36px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 0px;
+	margin:0px;
+	-moz-transition: all 0.218s;
+	-webkit-transition: all 0.218s;
+	-o-transition: all 0.218s;
+	transition: all 0.218s;
+}
+
+.btn.btn-signup:hover,
+.btn.btn-signup:active,
+.btn.btn-signup:focus,
+.btn.btn-return:hover,
+.btn.btn-return:active,
+.btn.btn-return:focus {
+	background-color: rgb(12, 97, 33);
+}
+.labelErrMsg {
+	padding: 0px;
+	font-size:13px;
+	color:red;
+}
+.labelMessage {
+	padding: 0px;
+	font-size: 13px;
+	color: blue;
+}
+
+
+
+
+
+
+
+
+
+
+

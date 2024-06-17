@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>共通</title>
+</head>
+<body>
+	<!-- 共通ヘッダ -->
+	<header th:fragment="header">
+		<hr>
+		<form th:method="get">
+			<div class="headerDiv">
+				<div class="systemNameDiv">
+					<a th:href="@{/main}" class="systemName">プログレス販売管理システム</a>
+				</div>
+				<div class="systemNavDiv">
+					<nav>
+						<ul>
+							<li><a th:href="@{/main}" class="subMenuName">メインメニュー</a></li>
+							<li><a th:href="@{/supplier/list}" class="subMenuName">発注先</a></li>
+							<li><a th:href="@{/merchandise/list}" class="subMenuName">商品</a></li>
+							<li><a href="#" class="subMenuName">商品在庫</a></li>
+							<li><a th:href="@{/}" class="subMenuName">ログアウト</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</form>
+		<hr>
+	</header>
+</body>
+</html>

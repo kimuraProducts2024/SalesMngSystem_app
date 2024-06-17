@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{common/Header}">
+<head th:replace="~{common/Head :: head_fragment(title='商品在庫一覧', scripts = ~{}, links = ~{::link})}">
+	<link rel="stylesheet" th:href="@{/css/stock/Stock.css}">
+</head>
+<body>
+	<div th:replace="~{common/Header :: header}"></div>
+	<main>
+		<form th:action="@{/stock/send}" th:object="${stockListForm}" th:method="post">
+			<div class="messageDiv" th:text="${message}"></div>
+			<hr>
+			<div class="headText">商品在庫登録</div>
+			<div class="registbtn">
+				<input type="submit" name="regist" class="button" value="商品在庫登録へ" />
+			</div>
+			<hr>
+			<table>
+				<tr>
+					<div class="headText">商品在庫検索</div>
+				</tr>
+				<tr>
+					<th>商品在庫ID</th>
+					<td><input type="text" class="idText" th:field="*{stFormStId}"></td>
+					<th>商品ID</th>
+					<td><input type="text" class="nameText" th:field="*{stFormMid}"></td>
+				</tr>
+				<tr>
+					<th>棚卸日</th>
+					<td>
+						<input type="date" class="dateText" th:field="*{stFormInventoryDateFrom}">
+						～
+						<input type="date" class="dateText" th:field="*{stFormInventoryDateTo}">
+					</td>
+					<th>棚位置</th>
+					<td><input type="text" class="nameText" th:field="*{stFormInventoryPoint}"></td>
+				</tr>
+				<tr>
+					<th>登録日</th>
+					<td>
+						<input type="date" class="dateText" th:field="*{stFormCreateDateFrom}">
+						～
+						<input type="date" class="dateText" th:field="*{stFormCreateDateTo}">
+					</td>
+					<th>更新日</th>
+					<td>
+						<input type="date" class="dateText" th:field="*{stFormUpdateDateFrom}">
+						～
+						<input type="date" class="dateText" th:field="*{stFormUpdateDatTo}">
+					</td>
+				</tr>
+			</table>
+			<div class="searchbtn">
+				<input type="submit" name="search" class="button" value="検索" />
+			</div>
+			<hr>
+			<div th:if="*{stList}">
+				<table>
+					<tr>
+						<div class="headText">商品在庫一覧</div>
+					</tr>
+					<thead>
+						<tr>
+							<th>商品在庫ID</th>
+							<th>商品ID</th>
+							<th class="mnamecol">商品名</th>
+							<th>棚卸日</th>
+							<th>棚卸数</th>
+							<th>最大在庫</th>
+							<th>発注点</th>
+							<th>棚位置</th>
+							<th>登録日</th>
+							<th>更新日</th>
+							<th>更新ボタン</th>
+							<th>削除ボタン</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="stockItem : *{stList}" th:object="${stockItem}">
+							<td th:text="*{stId}"></td>
+							<td th:text="*{mId}"></td>
+							<td th:text="*{mName}"></td>
+							<td th:text="*{#dates.format(inventoryDate, 'yyyy/MM/dd')}"></td>
+							<td th:text="*{inventoryNum}"></td>
+							<td th:text="*{maxStockNum}"></td>
+							<td th:text="*{orderPoint}"></td>
+							<td th:text="*{inventoryPoint}"></td>
+							<td th:text="*{#dates.format(createDate, 'yyyy/MM/dd')}"></td>
+							<td th:text="*{#dates.format(updateDate, 'yyyy/MM/dd')}"></td>
+							<td>
+								<form method="get" th:action="@{/stock/edit/{id}/{mid}(id=*{stId}, mid=*{mId})}">
+									<input type="submit" name="edit" class="button" value="更新" />
+								</form>
+							</td>
+							<td>
+								<form method="get" th:action="@{/stock/delete/{id}/{mid}(id=*{stId}, mid=*{mId})}">
+									<input type="submit" name="delete" class="button" value="削除" />
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</main>
+</body>
+</html>

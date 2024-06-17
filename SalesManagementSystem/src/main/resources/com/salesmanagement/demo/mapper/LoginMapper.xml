@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+			PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.salesmanagement.demo.mapper.LoginMapper">
+	<!-- マッピング定義（LoginUser） -->
+	<resultMap type="com.salesmanagement.demo.entity.LoginUser" id="userId">
+		<id column="USERID" property="userId"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="ADMIN" property="admin"/>
+		<result column="ERRCOUNT" property="errCount"/>
+		<result column="LOCKFLG" property="lockFlg"/>
+		<result column="CREATEDT" property="createDt"/>
+		<result column="UPDATEDT" property="updateDt"/>
+		<result column="DELETEDT" property="deleteDt"/>
+	</resultMap>
+	
+	<!-- ユーザ情報取得 -->
+	<select id="selectLoginUser">
+		SELECT
+			*
+		FROM
+			LOGINUSER
+		WHERE
+			USERID = #{lFormUserId}
+	</select>
+	
+	<!-- エラーカウントの更新 --> 
+	<update id="updateErrCount">
+		UPDATE
+			LOGINUSER
+		SET
+			ERRCOUNT = #{lFormErrcount},
+			UPDATEDT = SYSTIMESTAMP
+		WHERE
+			USERID = #{lFormUserId}
+	</update>
+	
+	<!-- パスワード変更 -->
+	<update id="updatePassword">
+		UPDATE 
+			LOGINUSER 
+		SET 
+			PASSWORD = #{lFormPassword}, 
+			UPDATEDT = SYSTIMESTAMP
+		WHERE 
+			USERID = #{lFormUserId} 
+	</update>
+	
+	<!-- ユーザ登録 -->
+	<insert id="insertLoginUser">
+		INSERT INTO 
+			LOGINUSER 
+		VALUES ( 
+			#{lFormUserId}, 
+			#{lFormPassword}, 
+			1, 
+			0, 
+			0, 
+			SYSTIMESTAMP,
+			SYSTIMESTAMP,
+			null
+		)
+	</insert>
+</mapper>
