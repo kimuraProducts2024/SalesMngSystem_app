@@ -3,10 +3,10 @@
 
 開発環境
 ・開発言語：java
-・開発ツール：Eclipse
+・開発ツール：Eclipse 2023
 ・フレームワーク：Spring Boot
 ・ビルドツール：Gradle
 ・テンプレートエンジン：Thymeleaf
-・データベース：Oracle
+・データベース：Oracle、　A5SQL、SqlDeveloper
 ・ORM：MyBatis
-・画面デザイン：一部　BootStrap
+・画面デザイン：一部　BootStrap 5
