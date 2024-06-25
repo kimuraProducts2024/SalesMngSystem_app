@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.salesmanagement.demo.entity.Supplier;
+import com.salesmanagement.demo.form.LoginForm;
 import com.salesmanagement.demo.form.MerListForm;
 import com.salesmanagement.demo.form.MerRegiForm;
 import com.salesmanagement.demo.form.StockListForm;
@@ -120,7 +121,9 @@ public class MainMenuController {
 	
 	// ログイン画面を表示
 	@PostMapping(value = "/send", params = "logOut")
-	public String showLogin() {
+	public String showLogin(LoginForm loginForm, Model model) {
+		
+		model.addAttribute("loginForm", loginForm);
 		
 		return "/login/Login";
 	}

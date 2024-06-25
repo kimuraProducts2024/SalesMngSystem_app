@@ -2,8 +2,9 @@
 <html xmlns="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{common/Header}">
-<head th:replace="~{common/Head :: head_fragment(title='商品在庫一覧', scripts = ~{}, links = ~{::link})}">
+<head th:replace="~{common/Head :: head_fragment(title='商品在庫一覧', scripts = ~{::script}, links = ~{::link})}">
 	<link rel="stylesheet" th:href="@{/css/stock/Stock.css}">
+	<script type="text/javascript" th:src="@{/js/Common.js}"></script>
 </head>
 <body>
 	<div th:replace="~{common/Header :: header}"></div>
@@ -29,9 +30,9 @@
 				<tr>
 					<th>棚卸日</th>
 					<td>
-						<input type="date" class="dateText" th:field="*{stFormInventoryDateFrom}">
+						<input type="date" class="dateText" th:field="*{stFormInventoryDateFrom}" id="inventoryDateFrom">
 						～
-						<input type="date" class="dateText" th:field="*{stFormInventoryDateTo}">
+						<input type="date" class="dateText" th:field="*{stFormInventoryDateTo}" id="inventoryDateTo">
 					</td>
 					<th>棚位置</th>
 					<td><input type="text" class="nameText" th:field="*{stFormInventoryPoint}"></td>
@@ -39,20 +40,20 @@
 				<tr>
 					<th>登録日</th>
 					<td>
-						<input type="date" class="dateText" th:field="*{stFormCreateDateFrom}">
+						<input type="date" class="dateText" th:field="*{stFormCreateDateFrom}" id="createDateFrom">
 						～
-						<input type="date" class="dateText" th:field="*{stFormCreateDateTo}">
+						<input type="date" class="dateText" th:field="*{stFormCreateDateTo}" id="createDateTo">
 					</td>
 					<th>更新日</th>
 					<td>
-						<input type="date" class="dateText" th:field="*{stFormUpdateDateFrom}">
+						<input type="date" class="dateText" th:field="*{stFormUpdateDateFrom}" id="updateDateFrom">
 						～
-						<input type="date" class="dateText" th:field="*{stFormUpdateDatTo}">
+						<input type="date" class="dateText" th:field="*{stFormUpdateDatTo}" id="updateDateTo">
 					</td>
 				</tr>
 			</table>
 			<div class="searchbtn">
-				<input type="submit" name="search" class="button" value="検索" />
+				<input type="submit" name="search" class="button" onclick="return searchStockBtnClick()" value="検索" />
 			</div>
 			<hr>
 			<div th:if="*{stList}">
