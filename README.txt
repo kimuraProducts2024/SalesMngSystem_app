@@ -2,7 +2,7 @@
 　の一覧、登録、更新、削除ができるプロジェクト
 
 開発環境
-・開発言語：java
+・開発言語：java、 javascript
 ・開発ツール：Eclipse 2023
 ・フレームワーク：Spring Boot
 ・ビルドツール：Gradle
